@@ -76,3 +76,29 @@ public:
         return dp[n];
     }
 };
+
+//space otimization
+class Solution {
+public:
+    int numDecodings(string s) {
+       int n = s.size();
+        int dp[n+1];
+        int way1 = 1;
+        int way2 = 1;
+        if(s[0] == '0')way2 = 0;
+        int ans;
+        for(int i = 2; i <= n; i++){
+            ans = 0;
+            if(s[i-2] == '1'){
+                ans += way1;
+            }
+            else if(s[i-2] == '2' && s[i-1]>='0' && s[i-1] <='6'){
+                ans += way1;
+            }
+            if(s[i-1] != '0')ans += way2;
+            way1 = way2;
+            way2 = ans;
+        }
+        return way2;
+    }
+};
